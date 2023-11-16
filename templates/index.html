@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TIDAL Migrator</title>
+  <!-- Add additional styling as needed -->
+  <style>
+    .container {
+      text-align: center;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>TIDAL Migrator</h1>
+    <button id="loginButton" onclick="login()">Login to your account</button>
+    <div id="postLoginContainer"></div> <!-- Container for post login content -->
+
+  </div>
+
+  <script>
+    function login() {
+      fetch('/login', { method: 'POST' })
+        .then(response => response.json())
+        .then(data => {
+          let url = data.url;
+          if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url;
+          }
+          window.open(url, '_blank');
+          startPolling();
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    function startPolling() {
+      const intervalId = setInterval(() => {
+        fetch('/check_login')
+          .then(response => response.json())
+          .then(data => {
+            if (data.status === "Logged in") {
+              clearInterval(intervalId);
+              alert("Login successful!");
+              document.getElementById('loginButton').style.display = 'none';
+              loadPostLoginContent();
+            }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }, 1000); // Poll every second
+    }
+
+    function loadPostLoginContent() {
+      fetch('/post_login_content')
+          .then(response => response.text())
+          .then(html => {
+              document.getElementById('postLoginContainer').innerHTML = html;
+          })
+          .catch(error => console.error('Error loading post-login content:', error));
+  }
+  </script>
+
+</body>
+
+</html>
