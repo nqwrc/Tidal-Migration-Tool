@@ -20,10 +20,6 @@ def check_login():
         return jsonify(status="Logged in"), 200
     else:
         return jsonify(status="Not logged in"), 401
-    
-@app.route('/post_login_content')
-def post_login_content():
-    return render_template('post_login.html')
 
 @app.route('/add_favorites', methods=['POST'])
 def add_favorites_route():
@@ -38,13 +34,10 @@ def save_favorites_route():
     migrator.save_favorites()
     return jsonify(message="Favorites saved successfully"), 200
 
-@app.route('/get_favorites')
-def get_favorites():
-    try:
-        favorites = migrator.get_favorites()
-        return jsonify(favorites)
-    except Exception as e:
-        return jsonify(error=str(e)), 500
+@app.route('/post_login_content')
+def post_login_content():
+    favorites_count = migrator.get_favorites_count()
+    return render_template('post_login.html', favorites_count=favorites_count)
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,50 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Post Login - TIDAL Migrator</title>
-<style>
-  .container {
-    text-align: center;
-    margin-top: 50px;
-  }
-  button {
-    margin: 10px;
-  }
-</style>
-</head>
-<body onload="loadFavorites()">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Post Login - TIDAL Migrator</title>
+    <style>
+      .container {
+        text-align: center;
+        margin-top: 50px;
+      }
+      button {
+        margin: 10px;
+      }
+    </style>
+  </head>
+  <body onload="loadFavorites()">
     <div class="container">
-        <div id="favoritesContainer"></div>
-<div class="container">
-  <h1>Login successful</h1>
-  <button onclick="addFavorites()">Add Favorites</button>
-  <button onclick="saveFavorites()">Save Favorites</button>
-</div>
+      <div id="favoritesContainer"></div>
+      <!-- New Section for Displaying Favorites Count -->
+      <div id="favoritesCount">
+        <h2>Favorites Count</h2>
+        <ul>
+          {% for category, count in favorites_count.items() %}
+          <li>{{ category }}: {{ count }}</li>
+          {% endfor %}
+        </ul>
+      </div>
+      <!-- End of New Section -->
 
-<script>
-function addFavorites() {
-  // Make a GET request to the add_favorites route
-  fetch('/add_favorites')
-    .then(response => response.json())
-    .then(data => {
-      // Handle the response
-      console.log(data);
-      alert("Favorites added successfully!");
-    });
-}
+      <div class="container">
+        <h1>Login successful</h1>
+        <input
+          type="file"
+          id="csvFileInput"
+          name="files"
+          accept=".csv"
+          multiple
+        />
+        <button onclick="addFavorites()">Upload CSV to Tidal</button>
+        <button onclick="saveFavorites()">Download CSV Files</button>
+      </div>
+    </div>
 
-function saveFavorites() {
-  // Make a GET request to the save_favorites route
-  fetch('/save_favorites')
-    .then(response => response.json())
-    .then(data => {
-      // Handle the response
-      console.log(data);
-      alert("Favorites saved successfully!");
-    });
-}
-</script>
-</body>
+    <script>
+
+    </script>
+  </body>
 </html>

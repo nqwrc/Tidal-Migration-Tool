@@ -62,7 +62,51 @@
               document.getElementById('postLoginContainer').innerHTML = html;
           })
           .catch(error => console.error('Error loading post-login content:', error));
-  }
+    }
+
+    function addFavorites() {
+      const files = document.getElementById('csvFileInput').files;
+      if (files.length === 0) {
+        alert('Please select at least one CSV file.');
+        return;
+      }
+    
+      // Preparing FormData with the selected files
+      let formData = new FormData();
+      for (let i = 0; i < files.length; i++) {
+        formData.append('files', files[i]);
+      }
+      console.log([...formData]); // To view the contents of FormData
+      // Making the POST request to the /add_favorites route
+      fetch('/add_favorites', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.errors) {
+          alert('Error: ' + data.errors.join(', '));
+        } else {
+          alert(data.message);
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred while uploading the files.');
+      });
+    }  
+
+    function saveFavorites() {
+      // Make a GET request to the save_favorites route
+      fetch("/save_favorites")
+        .then((response) => response.json())
+        .then((data) => {
+          // Handle the response
+          console.log(data);
+          alert("Favorites saved successfully!");
+        });
+    }
+    
   </script>
 
 </body>

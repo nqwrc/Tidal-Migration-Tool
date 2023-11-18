@@ -82,3 +82,19 @@ class TidalMigrator:
             return "video"
         else:
             raise ValueError(f"Unknown favorite type based on file name: {filename}")
+
+    def get_favorites_count(self):
+        categories = {
+            "albums": self.session.user.favorites.albums(),
+            "tracks": self.session.user.favorites.tracks(),
+            "videos": self.session.user.favorites.videos(),
+            "artists": self.session.user.favorites.artists(),
+            "playlists": self.session.user.favorites.playlists(),
+        }
+        
+        favorites_count = {}
+
+        for category, favorites in categories.items():
+            favorites_count[category] = len(favorites)
+            
+        return favorites_count
