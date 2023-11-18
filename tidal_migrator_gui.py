@@ -85,7 +85,8 @@ class TidalMigratorGUI:
         """Update the count of favorites for each type."""
         if self.migrator.check_login():
             for favorite_type, label in self.favorite_labels.items():
-                count = self.migrator.count_favorites(favorite_type)
+                favorites_method = getattr(self.migrator.session.user.favorites, favorite_type, None)
+                count = len(favorites_method())
                 label.config(text=f"{favorite_type.capitalize()}: {count}")
             
     def run(self):

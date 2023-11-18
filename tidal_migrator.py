@@ -67,7 +67,7 @@ class TidalMigrator:
             except Exception as e:
                 errors.append(str(e))
         return errors
-
+        
     def _determine_favorite_type(self, filename: str) -> str:
         """Determine the type of favorite based on the filename."""
         if "albums" in filename:
