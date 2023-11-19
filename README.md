@@ -7,4 +7,4 @@
 ![image](https://github.com/nqwrc/Tidal-Migration-Tool/assets/44801950/dbb775e6-432e-43ac-8e76-160235748958)
 ![image](https://github.com/nqwrc/Tidal-Migration-Tool/assets/44801950/0c330ad2-113e-47a8-aa67-a8275c6386f9)
 
-*If you need to login from a different account, simply close and re-open the app*
+*In order to login from a different account, simply close and re-open the app*
