@@ -1,7 +1,9 @@
-import tidalapi
-from pathlib import Path
 import csv
+from pathlib import Path
 from typing import List, Set
+
+import tidalapi
+
 
 class TidalMigrator:
     """A class to handle Tidal login and favorites management."""
@@ -54,8 +56,8 @@ class TidalMigrator:
             category_path = favorites_dir / f"{category}.csv"
             self.save_favorites_to_csv(favorites, category_path)
 
-    def add_favorites(self, filepaths: List[Path]) -> List[str]:
-        """Add favorites from a list of CSV files to Tidal."""
+    def upload_favorites(self, filepaths: List[Path]) -> List[str]:
+        """Upload favorites from a list of CSV files to Tidal."""
         errors = []
         for filepath in filepaths:
             try:
